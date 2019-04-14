@@ -1,0 +1,92 @@
+// ./src/common/main.component.jsx
+import React, { Component } from "react";
+import {
+  Table,
+  Modal,
+  Button,
+  Checkbox,
+  Form,
+  Header,
+  Image
+} from "semantic-ui-react";
+
+export default class CreateCust extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      //customers: [],
+      onSubmit: this.handleSubmit.bind(this)
+    };
+  }
+
+  handleSubmit = e => {
+    //e.preventDefault();
+    var self = this;
+    var data = new FormData();
+    const payload = {
+    //  name: self.refs.name.getValue(),
+    //  address: self.refs.address.getValue()
+    };
+
+    data.append("myjsonkey", JSON.stringify(payload));
+
+    fetch("http://localhost:61419/Customers/CreateCustomer", {
+      method: "POST",
+      headers: {
+        Accept: "application/json"
+      },
+      body: data
+    })
+      .then(res => res.json())
+      .then(function(body) {
+        console.log(body).then(
+          result => {
+            this.setState({
+              isLoaded: true
+              // customers: result
+            });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          error => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+          }
+        );
+      });
+  };
+
+  render() {
+    const { error, isLoaded, customers } = this.state;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else {
+      return (
+        <div>
+          <Modal size="mini" trigger={<Button>New Customer</Button>}>
+            <Modal.Header>Create Customer</Modal.Header>
+            <Modal.Content>
+            <Form onSubmit={this.onSubmit}>
+              <Form.Field ref="name">
+                <label>Name</label>
+                <input placeholder="Name" />
+              </Form.Field>
+              <Form.Field ref="address">
+                <label>Address</label>
+                <input placeholder="Address" />
+              </Form.Field>
+
+              <Button type="submit">Create</Button>
+              </Form>
+            </Modal.Content>
+          </Modal>
+        </div>
+      );
+    }
+  }
+}
