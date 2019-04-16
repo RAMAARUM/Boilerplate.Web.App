@@ -10,10 +10,10 @@ export default class PutProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        id: this.props.editdata.pid,
-        name: this.props.editdata.pname,
-        price: this.props.editdata.price,
-        page: this.props.editdatapage,
+        id: props.editdata.pid,
+        name: props.editdata.pname,
+        price: props.editdata.price,
+        page: props.editdatapage,
         nameError: false,
         priceError: false,
         formError: false,
@@ -29,7 +29,16 @@ export default class PutProduct extends Component {
     })
   };
 
-  handleClose = () => this.setState({ modalOpen: false, complete: false, errorMessage:' ', nameError: false, priceError: false,formError: false, id: this.props.editdata.pid, name: this.props.editdata.pname, price: this.props.editdata.price, page: this.props.editdatapage }, ()=>this.props.loadproductpage(this.state.page,this.props.size));
+  handleClose = () => this.setState({ modalOpen: false,
+     complete: false,
+     errorMessage:'Please complete all required fields.', 
+     nameError: false, 
+     priceError: false,
+     formError: false,
+     page: this.state.page
+     }, 
+      ()=> this.props.loadproductpage(this.state.page,this.props.size)
+     );
   handleOpen = () => this.setState({ modalOpen: true });
 
   submitEditProductForm = () => {

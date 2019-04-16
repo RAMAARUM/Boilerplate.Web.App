@@ -61,48 +61,37 @@ namespace Boilerplate.Web.App.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
        // [ValidateAntiForgeryToken]
-       //public async Task<IActionResult> Create([Bind("Id,Name,Address")] Customer customer)
-       public JsonResult CreateCustomer([FromBody]Customer customer)
+        public JsonResult CreateCustomer([FromBody]Customer customer)
 
         {
             if (ModelState.IsValid)
             {
                 _context.Add(customer);
-              // await _context.SaveChangesAsync();
                 _context.SaveChanges();
-                //return RedirectToAction(nameof(Index));
             }
             return Json(customer);
         }
 
         // GET: Customers/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
         public JsonResult CustgetEdit(int? id)
         {
             if (id == null)
             {
-                //return NotFound();
                 return Json("NotFound");
             }
 
-            //var customer = await _context.Customer.FindAsync(id);
             var customer = _context.Customer.Find(id);
             if (customer == null)
             {
-                //return NotFound();
                 return Json("NotFound");
             }
-            //return View(customer);
             return Json(customer);
         }
 
         // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
         //[ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address")] Customer customer)
-        //public JsonResult CustputEdit (int id, [FromBody] Customer cust)
         [HttpPut]   
         public JsonResult EditCustomer([FromBody] Customer cust)
         {
@@ -129,30 +118,24 @@ namespace Boilerplate.Web.App.Controllers
                         throw;
                     }
                 }
-               // return RedirectToAction(nameof(Index));
             }
             return Json(cust);
         }
 
         // GET: Customers/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        public JsonResult Delete(int? id)
+        public JsonResult GetDelete([FromBody]Customer del)
         {
-            if (id == null)
+            if (del == null)
             {
-                //return NotFound();
                 return Json("ID not found");
             }
 
-            //var customer = await _context.Customer
             var customer = _context.Customer
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefault(m => m.Id ==del.Id);
             if (customer == null)
             {
-                //return NotFound();
                 return Json("Details not found");
             }
-
             return Json(customer);
         }
 
@@ -160,16 +143,21 @@ namespace Boilerplate.Web.App.Controllers
         //[HttpPost, ActionName("Delete")]
         [HttpDelete]
         //[ValidateAntiForgeryToken]
-       // public async Task<IActionResult> DeleteConfirmed(int id)
         public JsonResult DeleteCustomer([FromBody]Customer del)
-
         {
-            //var customer = await _context.Customer.FindAsync(id);
             var customer = _context.Customer.Find(del.Id);
+            _context.Entry(customer).Collection(c => c.ProductSold).Load();
+            if (customer.ProductSold.Count > 0)
+            {
+               foreach(var productSold in customer.ProductSold)
+                {
+                    _context.ProductSold.Remove(productSold);
+                }            
+            }
             _context.Customer.Remove(customer);
             _context.SaveChanges();
-            // return RedirectToAction(nameof(Index));
-            return Json(customer);
+
+            return Json("Customer Removed Successfully");
         }
 
         private bool CustomerExists(int id)

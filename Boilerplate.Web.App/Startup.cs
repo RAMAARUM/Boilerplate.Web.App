@@ -33,7 +33,7 @@ namespace Boilerplate.Web.App
             });
 
             services.AddMvc();
-
+            
             var connection = @"Server=siva-pc;Database=TALENT;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TALENTContext>(options => options.UseSqlServer(connection));
         }

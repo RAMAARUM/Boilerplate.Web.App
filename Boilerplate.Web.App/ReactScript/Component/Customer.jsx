@@ -90,8 +90,7 @@ export default class Customer extends Component {
                 <Table.Row>
                   <Table.HeaderCell colSpan="5" textAlign="center">
                     <Dropdown 
-                    as={Button}
-                    color='teal'
+                    as={Button}                   
                     floating    
                     options={listoptions}
                     value={this.state.size}
@@ -102,23 +101,21 @@ export default class Customer extends Component {
                     <Button
                       content="PREV"
                       icon labelPosition="left"
-                      icon='left arrow'
-                      color='olive'
+                      icon='left arrow'                      
                       onClick={() =>
                         this.fetchCustomer(this.state.customers.metaData.pageNumber - 1,
-                         this.state.value                        )
+                         this.state.size)
                       }
                       disabled={!customers.metaData.hasPreviousPage}
                     />
                     --
-                    <Label color='orange'>
+                    <Label color='blue'>
                     {customers.metaData.pageNumber}/
                     {customers.metaData.pageCount}
                     </Label>
                      --
                     <Button
-                      content="NEXT"
-                      color='olive'
+                      content="NEXT"                      
                       icon labelPosition="right"
                       icon='right arrow'
                       onClick={() =>

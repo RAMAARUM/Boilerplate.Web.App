@@ -5,7 +5,7 @@ import {
   Button,
 } from "semantic-ui-react";
 
-export default class DeleteStore extends Component {
+export default class DeleteSales extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ export default class DeleteStore extends Component {
     this.setState({
       complete: true
     })};
-  handleClose = () => this.setState({ modalOpen: false, complete: false,id: this.props.deletedata.sid, name: this.props.deletedata.sname, address: this.props.deletedata.saddress,page:this.props.deletedatapage}, ()=>this.props.loadstorepage(this.state.page,this.props.size));
+  handleClose = () => this.setState({ modalOpen: false, complete: false}, ()=>this.props.loadstorepage(this.state.page,this.props.size));
   handleOpen = () => this.setState({ modalOpen: true });
 
   submitDeleteStoreForm = () => {

@@ -29,7 +29,15 @@ export default class PutStore extends Component {
     })
   };
 
-  handleClose = () => this.setState({ modalOpen: false, complete: false, id: this.props.editdata.sid,name: this.props.editdata.sname,address: this.props.editdata.saddress, page: this.props.editdatapage, nameError: false,addressError: false,formError: false, errorMessage: '' }, ()=>this.props.loadstorepage(this.state.page,this.props.size));
+  handleClose = () => this.setState(
+    { modalOpen: false, 
+      complete: false, 
+      nameError: false,
+      addressError: false,      
+      formError: false, 
+      errorMessage: 'Please complete all required fields.' }, 
+      ()=>this.props.loadstorepage(this.state.page,this.props.size));
+      
   handleOpen = () => this.setState({ modalOpen: true });
 
   submitEditStoreForm = () => {

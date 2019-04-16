@@ -1,11 +1,10 @@
 ﻿// ./src/common/main.component.jsx
 import React, { Component } from 'react';
-import { Table, Modal, Container, Button, Checkbox, Form, Header, Menu, Image } from 'semantic-ui-react';
 import NavBar from './NavBar.jsx';
 import Customer from './Customer.jsx';
 import Product from './Product.jsx';
 import Store from './Store.jsx';
-import CreateCust from './CreateCust.jsx';
+import Sales from './Sales.jsx';
 import {
     BrowserRouter as Router,
     Route
@@ -25,12 +24,11 @@ export default class App extends Component {
             <div>
             <Router >
             <div className="app">
-                <NavBar />
-                <Route exact path="/" component={Customer} />
+                <NavBar />                
                 <Route exact path="/customer" component={Customer} />
                 <Route exact path="/product" component={Product} />
                 <Route exact path="/store" component={Store} />
-                <Route exact path="/sales" component={Store} />
+                <Route exact path="/sales" component={Sales} />
             </div>
             </Router >
                

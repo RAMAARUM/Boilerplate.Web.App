@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -19,6 +20,8 @@ namespace Boilerplate.Web.App.Models
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductSold> ProductSold { get; set; }
         public virtual DbSet<Store> Store { get; set; }
+        public virtual ICollection<Dropdown> Dropdown { get; set; }
+        public virtual ICollection<SalesData> SalesData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
