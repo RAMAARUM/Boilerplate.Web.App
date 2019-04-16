@@ -29,7 +29,13 @@ export default class PutCustomer extends Component {
     })
   };
 
-  handleClose = () => this.setState({ modalOpen: false, complete: false }, ()=>this.props.loadcustpage(this.state.page,this.props.size));
+  handleClose = () => this.setState({ modalOpen: false,
+        nameError: false,
+        addressError: false,
+        formError: false,
+        errorMessage: 'Please complete all required fields.',
+        complete: false }, 
+     ()=>this.props.loadcustpage(this.state.page,this.props.size));
   handleOpen = () => this.setState({ modalOpen: true });
 
   submitEditCustForm = () => {
@@ -37,15 +43,15 @@ export default class PutCustomer extends Component {
     let nameerror = false;
     let addresserror = false;
 
-    if (this.state.name === '') {
-      this.setState({nameError: true})
+    if (this.state.name === '') { alert ("Name cannot be empty, hence resetting to original"),
+      this.setState({nameError: true, name: this.props.editdata.name })
       nameerror = true
     } else {
       this.setState({nameError: false})
       nameerror = false
     }
-    if (this.state.address === '') {
-      this.setState({addressError: true})
+    if (this.state.address === '') {alert ("Address cannot be empty, hence resetting to original"),
+      this.setState({addressError: true, address: this.props.editdata.address})
       addresserror = true
     } else {
       this.setState({addressError: false})

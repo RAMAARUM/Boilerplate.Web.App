@@ -6,7 +6,7 @@ export default class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeItem: 'customer',
+            activeItem: '',
         };
         // This binding is necessary to make `this` work in the callback
         // this.handleItemClick = this.handleItemClick.bind(this);

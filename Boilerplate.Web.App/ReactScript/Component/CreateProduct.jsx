@@ -1,4 +1,4 @@
-﻿// ./src/common/main.component.jsx
+// ./src/common/main.component.jsx
 import React, { Component } from "react";
 import {
   Modal,
@@ -6,14 +6,14 @@ import {
   Form
 } from "semantic-ui-react";
 
-export default class CreateCust extends Component {
+export default class CreateProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      address: "",
+      price: 0.0,
       nameError: false,
-      addressError: false,
+      priceError: false,
       formError: false,
       errorMessage: "Please complete all required fields.",
       complete: false,
@@ -22,16 +22,7 @@ export default class CreateCust extends Component {
   }
 
  
-  handleClose = () => this.setState({ modalOpen: false,
-     complete: false, 
-     errorMessage:"Please complete all required fields.",
-     name:"", 
-     address:"",
-     nameError: false,
-     addressError: false,
-     formError: false}, 
-     ()=>this.props.loadcustpage(1,this.props.size)
-      );
+  handleClose = () => this.setState({ modalOpen: false, complete: false, errorMessage:" ", name:"", price:0.0,nameError: false, priceError: false,formError: false}, ()=>this.props.loadproductpage(1,this.props.size));
   handleOpen = () => this.setState({ modalOpen: true });
   successCallback = () => {
     this.setState({
@@ -39,9 +30,9 @@ export default class CreateCust extends Component {
     });    
   };
 
-  submitCreateCustForm = () => {
+  submitCreateProductForm = () => {
     let nerror = false;
-    let aerror = false;
+    let perror = false;
 
     if (this.state.name === "") {
       this.setState({ nameError: true });
@@ -50,15 +41,15 @@ export default class CreateCust extends Component {
       this.setState({ nameError: false });
       nerror = false;
     }
-    if (this.state.address === "") {
-      this.setState({ addressError: true });
-      aerror = true;
+    if (this.state.price === 0.0) {
+      this.setState({ priceError: true });
+      perror = true;
     } else {
-      this.setState({ addressError: false });
-      aerror = false;
+      this.setState({ priceError: false });
+      perror = false;
     }
 
-    if (nerror || aerror)
+    if (nerror || perror)
     {
       this.setState({ formError: true });
       return;
@@ -66,18 +57,18 @@ export default class CreateCust extends Component {
       this.setState({ formError: false });
     }
 
-    let Custdata = {
-      name: this.state.name,
-      address: this.state.address
+    let Productdata = {
+      pname: this.state.name,
+      price: this.state.price
     };  
 
-    fetch("/Customers/CreateCustomer", {
+    fetch("/Products/CreateProduct", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(Custdata)
+      body: JSON.stringify(Productdata)
     }).then(res => res.json()).then((body) => {
         console.log(body);
       }).then(()=>{this.successCallback();})    
@@ -89,14 +80,14 @@ export default class CreateCust extends Component {
       <Modal
         trigger={
           <Button onClick={this.handleOpen}  color="blue">
-            New Customer
+            New Product
           </Button>
         }
         open={this.state.modalOpen}
         onClose={this.handleClose}
         closeIcon={true}
       >
-        <Modal.Header>Add a new Customer</Modal.Header>
+        <Modal.Header>Add a new Product</Modal.Header>
         <Modal.Content>
           {!this.state.complete ? (
             <Modal.Description>
@@ -107,15 +98,16 @@ export default class CreateCust extends Component {
                       onChange={e => this.setState({ name: e.target.value })}
                       label="Name"
                       placeholder="Name..."
-                     error={this.state.nameError} />
+                     error={this.state.nameError}
+                     //error={this.state.nameError ? (<div> <p> Name should not be blank </p></div>) : null }
+                    />
                   </Form.Field>
                   <Form.Field>
                     <Form.Input
                       required={true}
-                      onChange={e => this.setState({ address: e.target.value })}
-                      label="Address"
-                      placeholder="City, State/Province, Country..."
-                      error={this.state.addressError}
+                      onChange={e => this.setState({ price: e.target.value })}
+                      label="Price"
+                      error={this.state.priceError}
                     />
                   </Form.Field>
               
@@ -124,7 +116,7 @@ export default class CreateCust extends Component {
           ) : (
             <div>
               <p>
-                Customer has been created successfully
+              Product has been created successfully
               </p>
             </div>
           )}
@@ -139,7 +131,7 @@ export default class CreateCust extends Component {
               icon="checkmark"
               labelPosition="right"
               content="Create"
-              onClick={() => this.submitCreateCustForm()}
+              onClick={() => this.submitCreateProductForm()}
             />
           </Modal.Actions>
         ) : null}

@@ -22,7 +22,16 @@ export default class CreateStore extends Component {
   }
 
  
-  handleClose = () => this.setState({ modalOpen: false, complete: false, errorMessage:" ", name:"", address:"",nameError: false, addressError: false,formError: false}, ()=>this.props.loadstorepage(1,this.props.size));
+  handleClose = () => this.setState({ modalOpen: false, 
+    complete: false, 
+    errorMessage:"Please complete all required fields.",
+    name:"", 
+    address:"",
+    nameError: false, 
+    addressError: false,
+    formError: false}, 
+    ()=>this.props.loadstorepage(1,this.props.size)
+    );
   handleOpen = () => this.setState({ modalOpen: true });
   successCallback = () => {
     this.setState({
@@ -98,9 +107,7 @@ export default class CreateStore extends Component {
                       onChange={e => this.setState({ name: e.target.value })}
                       label="Name"
                       placeholder="Name..."
-                     error={this.state.nameError}
-                     //error={this.state.nameError ? (<div> <p> Name should not be blank </p></div>) : null }
-                    />
+                     error={this.state.nameError}/>
                   </Form.Field>
                   <Form.Field>
                     <Form.Input

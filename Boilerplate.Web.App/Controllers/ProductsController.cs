@@ -67,9 +67,7 @@ namespace Boilerplate.Web.App.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(product);
-                // await _context.SaveChangesAsync();
                 _context.SaveChanges();
-                //return RedirectToAction(nameof(Index));
             }
             return Json(product);
         }
@@ -150,9 +148,16 @@ namespace Boilerplate.Web.App.Controllers
 
         {
             var product = _context.Product.Find(del.Pid);
+            _context.Entry(product).Collection(c => c.ProductSold).Load();
+            if (product.ProductSold.Count > 0)
+            {
+                foreach (var productSold in product.ProductSold)
+                {
+                    _context.ProductSold.Remove(productSold);
+                }
+            }
             _context.Product.Remove(product);
             _context.SaveChanges();
-            // return RedirectToAction(nameof(Index));
             return Json(product);
         }
 

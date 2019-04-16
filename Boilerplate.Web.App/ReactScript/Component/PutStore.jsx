@@ -45,15 +45,15 @@ export default class PutStore extends Component {
     let nameerror = false;
     let addresserror = false;
 
-    if (this.state.name === '') {
-      this.setState({nameError: true})
+    if (this.state.name === '') { alert ("Name cannot be empty, hence resetting to original"),
+      this.setState({nameError: true,  name: this.props.editdata.sname })
       nameerror = true
     } else {
       this.setState({nameError: false})
       nameerror = false
     }
-    if (this.state.address === '') {
-      this.setState({addressError: true})
+    if (this.state.address === '') {alert ("Address cannot be empty, hence resetting to original"),
+      this.setState({addressError: true, address: this.props.editdata.saddress})
       addresserror = true
     } else {
       this.setState({addressError: false})

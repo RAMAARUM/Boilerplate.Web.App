@@ -46,15 +46,15 @@ export default class PutProduct extends Component {
     let nameerror = false;
     let priceerror = false;
 
-    if (this.state.name === '') {
-      this.setState({nameError: true})
+    if (this.state.name === '') {alert ("Name cannot be empty, hence resetting to original"),
+      this.setState({nameError: true,name: this.props.editdata.pname })
       nameerror = true
     } else {
       this.setState({nameError: false})
       nameerror = false
     }
-    if (this.state.price === '') {
-      this.setState({priceError: true})
+    if (this.state.price === '') {alert ("Price cannot be empty, hence resetting to original"),
+      this.setState({priceError: true, price: this.props.editdata.price })
       priceerror = true
     } else {
       this.setState({priceError: false})

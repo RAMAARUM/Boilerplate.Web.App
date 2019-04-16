@@ -24,7 +24,8 @@ export default class DeleteProduct extends Component {
     this.setState({
       complete: true
     })};
-  handleClose = () => this.setState({ modalOpen: false, complete: false, id: this.props.deletedata.pid, name: this.props.deletedata.pname, price: this.props.deletedata.price, page:this.props.deletedatapage }, ()=>this.props.loadproductpage(this.state.page,this.props.size));
+  handleClose = () => this.setState({ modalOpen: false, complete: false},
+     ()=>this.props.loadproductpage(this.state.page,this.props.size));
   handleOpen = () => this.setState({ modalOpen: true });
 
   submitDeleteProductForm = () => {
